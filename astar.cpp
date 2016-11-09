@@ -43,10 +43,16 @@ void calculateNeighborsDistances(vector<Point*> &neighbors){
     }
 }
 
+
+void finishSearch(Point &current, int res);
+
+
 int subSearch(Point &current);
 
+int diferentSearch(Point &current, vector<Point*> neighbors);
+
 // THE search
-int search(Point &current)
+int search(Point &current, bool callDiferentSearch)
 {
     // if the distance is not calculated, calculate
     if (current.distance == -1){
@@ -55,6 +61,7 @@ int search(Point &current)
 
     // if is the goal, stop
     if ( current.distance == 0 ){
+        cout << "Distance 0: goal found" << endl;
         return 1;
     }
 
@@ -67,6 +74,7 @@ int search(Point &current)
 
     // if there's no more valid neighbors, stop
     if ( neighbors.size() == 0 ){
+        cout << "Not enough neighbors\n";
         current.label = " ";
         return 0;
     }
@@ -77,27 +85,45 @@ int search(Point &current)
         return (  a->distance < b->distance  );
     });
 
+    //M.print();
+    //cout << "pressione qualquer tecla para continuar...";
+    //getchar();
+
     // continue the recursive search
-    for (Point *closerPoint : neighbors)
-    {
-        // if the closer point is a neighbor, stop
-        if (closerPoint->visit == 1){
-            break;
+    if ( callDiferentSearch ){
+        if (diferentSearch(current, neighbors)){
+            finishSearch(current,1);
+            return 1;
         }
-        // if was not visited yet
-        if (closerPoint->visit == -1){
-            // if child find the way
-            if (subSearch( *closerPoint )){
-                return 1;
+    } else {
+        for (Point *closerPoint : neighbors)
+        {
+            // if the closer point is a neighbor, stop
+            if (closerPoint->visit == 1){
+                break;
+            }
+            // if was not visited yet
+            if (closerPoint->visit == -1){
+                // if child find the way 
+                if (subSearch( *closerPoint )){
+                    finishSearch(current,1);
+                    return 1;
+                }
             }
         }
     }
-    
-    // remove from used way, but still visited
-    current.label = " ";
-    current.visit = 2;
+    finishSearch(current,0);
     return 0;
 }
+
+void finishSearch(Point &current, int res){
+    if ( res == 0 ) {
+        // remove from used path, but still visited
+        current.label = " ";
+        current.visit = 2;
+    }
+}
+
 
 
 

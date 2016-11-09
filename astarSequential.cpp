@@ -2,20 +2,21 @@
 using namespace std;
 #include "astar.cpp"
 
+int diferentSearch(Point &current, vector<Point*> neighbors){}
 
 int subSearch(Point &current)
 {
-    return search(current);
+     return search(current,false);
 }
 
 int main(int argc, char *argv[])
 {
 
-    M = initMatrix("./genMatrix.txt");
+    M = initMatrix("./matrix.txt");
 
     clock_t clockCount = clock();
 
-    if ( search( M[0][0] ) )
+    if ( search( M[0][0], false ) )
     {
         cout << "Found a path\n";
     } 
@@ -28,7 +29,7 @@ int main(int argc, char *argv[])
 
     double timeSpent = clockCount / (double) CLOCKS_PER_SEC;
 
-    //M.print();
+    M.print();
     
     cout << "Time spent: " << timeSpent << endl;
 
