@@ -4,11 +4,11 @@
 #include <time.h>
 using namespace std;
 
-//#define LINS 40
-//#define COLS  60
+#define LINS 40
+#define COLS  60
 
-#define LINS 8000
-#define COLS 8000
+//#define LINS 8000
+//#define COLS 8000
 
 int main(int argc, char *argv[])
 {

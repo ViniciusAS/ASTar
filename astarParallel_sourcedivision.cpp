@@ -58,7 +58,7 @@ int subSearch(Point &current)
 int main(int argc, char *argv[])
 {
 
-    M = initMatrix("./matrix.txt");
+    M = initMatrix("./genMatrix.txt");
 
     clock_t clockCount = clock();
     
@@ -79,7 +79,7 @@ int main(int argc, char *argv[])
 
     double timeSpent = clockCount / (double) CLOCKS_PER_SEC;
 
-    M.print();
+    //M.print();
     
     cout << "Time spent: " << timeSpent << endl;
 
